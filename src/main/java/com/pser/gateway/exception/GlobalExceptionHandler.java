@@ -1,7 +1,8 @@
 package com.pser.gateway.exception;
 
-import com.pser.gateway.common.response.ApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pser.gateway.common.response.ApiResponse;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
@@ -42,6 +43,9 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler, ServerA
         } else if (ex instanceof AuthenticationException) {
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             errorResponse.setMessage("인증 없음");
+        } else if (ex instanceof JwtException) {
+            response.setStatusCode(HttpStatus.UNAUTHORIZED);
+            errorResponse.setMessage(ex.getMessage());
         } else {
             response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
             errorResponse.setMessage("알 수 없는 서버 에러");
