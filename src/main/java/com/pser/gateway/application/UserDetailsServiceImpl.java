@@ -26,7 +26,8 @@ public class UserDetailsServiceImpl implements ReactiveUserDetailsService {
                                 user.getId(),
                                 user.getEmail(),
                                 user.getPassword(),
-                                toAuthorities(user.getRole())
+                                toAuthorities(user.getRole()),
+                                user.getRole()
                         )
                 );
     }

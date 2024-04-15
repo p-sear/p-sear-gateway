@@ -37,6 +37,7 @@ public class SecurityConfig {
     ) {
         builder.authorizeExchange(
                 authorizeExchangeSpec -> authorizeExchangeSpec
+                        .matchers(securityProperties.getAuthenticatedApiMatchers()).authenticated()
                         .matchers(securityProperties.getPermittedApiMatchers()).permitAll()
                         .anyExchange().authenticated()
         );
@@ -53,16 +54,25 @@ public class SecurityConfig {
         return builder.build();
     }
 
-    @ConfigurationProperties("spring.security.permitted")
+    @ConfigurationProperties("spring.security.api")
     public static class SecurityProperties {
-        private final List<PathDto> apis;
+        private final List<PathDto> permittedApis;
+        private final List<PathDto> authenticatedApis;
 
-        public SecurityProperties(List<PathDto> apis) {
-            this.apis = apis;
+        public SecurityProperties(List<PathDto> permittedApis, List<PathDto> authenticatedApis) {
+            this.permittedApis = permittedApis;
+            this.authenticatedApis = authenticatedApis;
         }
 
         public PathPatternParserServerWebExchangeMatcher[] getPermittedApiMatchers() {
-            return apis.stream()
+            return permittedApis.stream()
+                    .map(PathDto::toMatcher)
+                    .toList()
+                    .toArray(new PathPatternParserServerWebExchangeMatcher[0]);
+        }
+
+        public PathPatternParserServerWebExchangeMatcher[] getAuthenticatedApiMatchers() {
+            return authenticatedApis.stream()
                     .map(PathDto::toMatcher)
                     .toList()
                     .toArray(new PathPatternParserServerWebExchangeMatcher[0]);

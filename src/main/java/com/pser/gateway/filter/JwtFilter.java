@@ -2,6 +2,7 @@ package com.pser.gateway.filter;
 
 import com.pser.gateway.Util;
 import com.pser.gateway.config.TokenProvider;
+import com.pser.gateway.dto.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
@@ -23,6 +24,8 @@ public class JwtFilter implements WebFilter {
         if (!Util.isNullOrBlank(token)) {
             return tokenProvider.getAuthentication(token)
                     .flatMap(authentication -> {
+                        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+                        addAuthHeader(exchange, userDetails);
                         Context context = ReactiveSecurityContextHolder.withAuthentication(authentication);
                         return chain.filter(exchange).contextWrite(context);
                     });
@@ -42,5 +45,15 @@ public class JwtFilter implements WebFilter {
         } catch (Exception e) {
             return token;
         }
+    }
+
+    private void addAuthHeader(ServerWebExchange exchange, UserDetailsImpl userDetails) {
+        exchange.getRequest().mutate().headers(
+                httpHeaders -> {
+                    httpHeaders.add("User-Id", userDetails.getId().toString());
+                    httpHeaders.add("User-Email", userDetails.getUsername());
+                    httpHeaders.add("User-Role", userDetails.getRole().name());
+                }
+        );
     }
 }

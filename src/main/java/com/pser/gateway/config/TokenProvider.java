@@ -76,7 +76,7 @@ public class TokenProvider {
     private UsernamePasswordAuthenticationToken toAuthenticationToken(User user) {
         List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
         UserDetails principle = new UserDetailsImpl(
-                user.getId(), user.getEmail(), user.getPassword(), authorities
+                user.getId(), user.getEmail(), user.getPassword(), authorities, user.getRole()
         );
         return new UsernamePasswordAuthenticationToken(principle, user.getPassword(), principle.getAuthorities());
     }
