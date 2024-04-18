@@ -13,9 +13,9 @@ spec:
         app: p-ser-gateway
     spec:
       volumes:
-        - name: gateway-volume
-          persistentVolumeClaim:
-            claimName: gateway-pvc
+        - name: app-config
+          configMap:
+            name: app-config
       containers:
         - name: gateway-container
           image: amanecopse/p-ser-gateway
@@ -23,4 +23,4 @@ spec:
             - containerPort: 8080
           volumeMounts:
             - mountPath: "/share"
-              name: gateway-volume
+              name: app-config

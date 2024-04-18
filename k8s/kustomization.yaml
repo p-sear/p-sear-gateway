@@ -5,7 +5,10 @@ resources:
   - ./deployment.yaml
   - ./service.yaml
   - ./ingress.yaml
-  - ./volume.yaml
   - ./namespace.yaml
 commonLabels:
   app: p-ser-gateway
+configMapGenerator:
+  - name: app-config
+    files:
+      - config/application.yaml
