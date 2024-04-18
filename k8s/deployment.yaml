@@ -18,7 +18,7 @@ spec:
             claimName: gateway-pvc
       containers:
         - name: gateway-container
-          image: p-ser-gateway
+          image: amanecopse/p-ser-gateway
           ports:
             - containerPort: 8080
           volumeMounts:
