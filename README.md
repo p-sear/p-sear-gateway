@@ -4,9 +4,17 @@
 ```
 ### 2. 이미지 빌드
 ```shell
- docker buildx build -t gateway .
+ docker buildx build -t amanecopse/p-ser-gateway .
 ```
 ### 3. 컨테이너 실행 (윈도우 환경)
 ```shell
- docker run --name gateway -p 8081:8080 -v C:\properties:/share gateway
+ docker run --name member -p 8081:8080 -v C:\properties:/share amanecopse/p-ser-gateway
+```
+### 4. push
+```shell
+ docker push amanecopse/p-ser-gateway
+```
+### 5. k8s
+```shell
+ kubectl apply -k ./k8s
 ```
