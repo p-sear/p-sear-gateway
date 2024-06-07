@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd C:\workspace\p-ser-backend && git pull origin develop
+            cd C:\workspace\p-ser-gateway && git pull origin develop
       - name: Execute remote ssh (switch branch)
         uses: appleboy/ssh-action@master
         with:
@@ -46,7 +46,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd C:\workspace\p-ser-backend && git switch develop
+            cd C:\workspace\p-ser-gateway && git switch develop
       - name: Execute remote ssh (redeploy)
         uses: appleboy/ssh-action@master
         with:
@@ -55,4 +55,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd C:\workspace\p-ser-backend && kubectl rollout restart deployment -n gateway-ns gateway-deployment
+            cd C:\workspace\p-ser-gateway && kubectl rollout restart deployment -n gateway-ns gateway-deployment
