@@ -13,12 +13,13 @@ import org.springframework.data.relational.core.mapping.Column;
 @AllArgsConstructor
 public class BaseEntity {
     @Id
+    @Column("id")
     private Long id;
 
-    @Column("createdAt")
+    @Column("created_at")
     private LocalDateTime createdAt;
 
-    @Column("updatedAt")
+    @Column("updated_at")
     private LocalDateTime updatedAt;
 
     @Override

@@ -10,15 +10,15 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table
+@Table("user")
 public class User extends BaseEntity {
-    @Column
+    @Column("email")
     private String email;
 
-    @Column
+    @Column("password")
     private String password;
 
-    @Column
+    @Column("role")
     private RoleEnum role;
 
     @Builder
