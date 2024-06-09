@@ -16,3 +16,5 @@ spec:
                 name: gateway-service
                 port:
                   number: 80
+  tls:
+    - secretName: pser-tls
