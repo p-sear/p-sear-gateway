@@ -19,11 +19,13 @@ public class CorsConfig {
     CorsConfigurationSource corsConfigurationSource(CorsProperties corsProperties) {
         List<String> allowedMethods = List.of("*");
         List<String> allowedHeaders = List.of("*");
+        List<String> exposedHeaders = List.of("Location");
 
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(corsProperties.getOrigins());
         configuration.setAllowedMethods(allowedMethods);
         configuration.setAllowedHeaders(allowedHeaders);
+        configuration.setExposedHeaders(exposedHeaders);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
